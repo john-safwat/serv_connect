@@ -7,11 +7,14 @@
 >
 > Scope: the **ServeConnect** backend in `sev_connect_backend/` of the ServeConnect monorepo (group `com.john`, project `sev_connect_backend`, **Kotlin 2.3 on a Java 25 toolchain, Gradle 9.8 (Groovy DSL), Spring Boot 4.1.1**). It is the server-side source of truth for the ServeConnect **offline-first** mobile app (sibling project `serv_connect_mobile/`) used by churches to connect **servants** with the **served** (members, children, youth, families). It serves clients over a versioned REST API plus dedicated sync endpoints. Because the system holds data about **minors**, every member-identifying field is treated as **PII** and every pastoral/medical/consent field as **Sensitive** by default (see §11 — Security, Safeguarding & PII Handling).
 >
+> **Repo-wide rules.** The root `../CLAUDE.md` applies on top of this file (plans folder, shared docs, API contract, cross-project security). This file adds the backend-specific rules; on security/safeguarding/PII/audit the stricter of the two wins.
+>
 > **Monorepo layout.** Documentation is **global to the monorepo**, not per project:
 >
 > ```
 > Serv-Connect/                  # monorepo root
 > ├── docs/                      # shared docs — BRD, API contract, sync protocol, security, walkthroughs
+> ├── plans/                     # living plan file per feature (root CLAUDE.md §1)
 > ├── sev_connect_backend/       # this project
 > └── serv_connect_mobile/       # mobile client
 > ```
@@ -32,7 +35,7 @@ Before writing a single line of code, Claude must:
 
 1. Read this file in full.
 2. Identify the **BRD module and `FR-x.y` IDs** the task touches, and their **phase tag** (`[MVP]`, `[P2]`, `[P3]`). Do not build a `[P2]`/`[P3]` requirement unless the user explicitly asked for it (§2.1).
-3. **Create a written plan** for the task — listing every class that will be created or modified, the package it lives in, the approach, the permission keys and scopes involved, the sync/conflict strategy for any new syncable entity (§12), and any decisions made — and **wait for explicit approval** before proceeding. No code is written until the plan is approved.
+3. **Write the plan into `plans/YYYY-MM-DD_backend_<slug>.md`** (from `plans/_TEMPLATE.md`, root `CLAUDE.md §1`) — listing every class that will be created or modified, the package it lives in, the approach, the permission keys and scopes involved, the sync/conflict strategy for any new syncable entity (§12), and any decisions made — and **wait for explicit approval** before proceeding. No code is written until the plan is approved. If a plan for this work already exists, resume it from its first unticked step.
 4. **Check `docs/03-api-reference.md`** to confirm the endpoint being changed doesn't already exist under a different name or path. Never define two endpoints that do the same thing.
 5. **Check the feature package** for the concern (`src/main/kotlin/com/john/sev_connect_backend/features/<feature>/`) before adding a new entity, DTO, service, or repository. Extend or reuse what's there rather than duplicating it.
 6. Grep the codebase for existing entities, repositories, mappers, and utility classes that already cover the requirement. If something exists, extend or parameterise it rather than reinventing it; justify any new implementation in the walkthrough.
@@ -154,7 +157,7 @@ Business rules that apply everywhere:
 - Never add a `Co-Authored-By` trailer to commit messages.
 
 - Valid types: `feat`, `fix`, `refactor`, `docs`, `chore`, `build`, `perf`, `security`, `test`.
-- Scope is the feature package or infrastructure area: `identity`, `members`, `attendance`, `sync`, `security`, `db`, `config`, `ci`, …
+- Scope is `backend/` + the feature package or infrastructure area (root `CLAUDE.md §2`): `backend/identity`, `backend/members`, `backend/attendance`, `backend/sync`, `backend/security`, `backend/db`, `backend/config`, …
 - Never commit:
   - `application-local.yml`/`.properties`, `.env`, or any file containing real credentials, connection strings, FCM service-account JSON, or API keys.
   - `build/`, `.gradle/`, `.kotlin/`, `.idea/`, `*.iml` (already gitignored — verify before a broad `git add`).
@@ -550,8 +553,8 @@ Before committing:
 
 ```bash
 # run from the monorepo root
-git status -- docs/     # expect changes matching the task
-git diff -- docs/
+git status -- docs/ plans/     # expect changes matching the task
+git diff -- docs/ plans/
 ```
 
 If `git status docs/` shows no changes for a task that modified code or the API surface, stop and ask whether it really needed none.
