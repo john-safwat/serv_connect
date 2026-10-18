@@ -1,0 +1,72 @@
+{
+  "common": {
+    "app_name": "ServeConnect",
+    "role_servant": "Servant",
+    "role_served_member": "Served Member",
+    "stage": "Stage",
+    "group": "Group",
+    "save": "Save",
+    "cancel": "Cancel",
+    "retry": "Retry",
+    "continue_btn": "Continue",
+    "sign_in": "Sign In",
+    "sign_out": "Sign Out",
+    "search": "Search",
+    "loading": "Loading...",
+    "offline_banner": "Working offline — changes will sync automatically when connected.",
+    "offline_mutations_disabled": "Offline grace window expired — read-only mode until you reconnect.",
+    "synced": "All changes synced",
+    "syncing": "Syncing changes...",
+    "pending_changes": "Pending offline changes"
+  },
+  "nav": {
+    "home": "Home",
+    "schedule": "Schedule",
+    "attend": "Attend",
+    "word": "Word",
+    "more": "More"
+  },
+  "home": {
+    "welcome_title": "Peace & Grace",
+    "welcome_subtitle": "Offline-first ministry companion for servants and families.",
+    "quick_actions": "Daily Ministry Loop",
+    "upcoming_meetings": "Upcoming Meetings",
+    "pending_follow_ups": "Follow-up Queue",
+    "daily_verse_title": "Daily Verse & Reading",
+    "schedule_placeholder": "Your personalised recurring meetings and group schedule will appear here.",
+    "attend_placeholder": "Take offline attendance and log absentee follow-ups with zero connectivity.",
+    "word_placeholder": "Downloaded Bible reading plans, daily verses, and spiritual content packs.",
+    "more_placeholder": "Directory, tasks, groups, safeguarding, and language settings.",
+    "switch_language": "Switch Language"
+  },
+  "identity": {
+    "sign_in_title": "Welcome to ServeConnect",
+    "sign_in_subtitle": "Sign in to access your ministry groups and schedule.",
+    "identifier_label": "Phone or Email",
+    "identifier_hint": "Enter your phone number or email",
+    "password_label": "Password",
+    "password_hint": "Enter your password",
+    "sign_in_cta": "Sign In",
+    "request_access": "Have an invitation code? Redeem access",
+    "idle_lock_message": "Your session was locked due to inactivity."
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "network": "No internet connection. Showing cached data where available.",
+    "timeout": "The request timed out. Please try again.",
+    "unauthorized": "Your session has expired. Please sign in again.",
+    "forbidden_scope": "You do not have permission to view or modify this record.",
+    "feature_disabled": "This module is not enabled for your organisation.",
+    "not_found": "The requested record could not be found.",
+    "conflict": "This record was updated on the server. Please review the changes.",
+    "scope_revoked": "Your access scope for this group or member was updated.",
+    "config_missing": "Application configuration is incomplete."
+  },
+  "validation": {
+    "required": "This field is required.",
+    "invalid_email": "Please enter a valid email address.",
+    "invalid_phone": "Please enter a valid phone number.",
+    "password_too_short": "Password must be at least 8 characters.",
+    "invalid_otp": "Please enter a valid 6-digit verification code."
+  }
+}

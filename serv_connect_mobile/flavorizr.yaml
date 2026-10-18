@@ -1,0 +1,44 @@
+# flutter_flavorizr config — generates native Android/iOS flavor wiring
+# for dev, staging, and prod without touching hand-written lib/ entrypoints.
+
+app:
+  android:
+    flavorDimensions: "flavor"
+  ios: {}
+
+instructions:
+  - android:buildGradle
+  - android:androidManifest
+  - android:dummyAssets
+  - android:icons
+  - ios:podfile
+  - ios:xcconfig
+  - ios:buildTargets
+  - ios:schema
+  - ios:plist
+  - ios:launchScreen
+  - ios:icons
+  - ide:config
+
+flavors:
+  dev:
+    app:
+      name: "ServeConnect Dev"
+    android:
+      applicationId: "com.john.serv_connect_mobile.dev"
+    ios:
+      bundleId: "com.john.servConnectMobile.dev"
+  staging:
+    app:
+      name: "ServeConnect Staging"
+    android:
+      applicationId: "com.john.serv_connect_mobile.staging"
+    ios:
+      bundleId: "com.john.servConnectMobile.staging"
+  prod:
+    app:
+      name: "ServeConnect"
+    android:
+      applicationId: "com.john.serv_connect_mobile"
+    ios:
+      bundleId: "com.john.servConnectMobile"
