@@ -38,3 +38,14 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### ServeConnect ###
+logs/
+.env
+application-local.*
+.env.*
+!.env.example
+*.jks
+*.p12
+*.pem
+*service-account*.json
