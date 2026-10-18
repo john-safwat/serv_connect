@@ -20,4 +20,5 @@ Every feature in ServeConnect is a long run, so each one gets a **living plan fi
 
 | Plan | Area | BRD | Phase | Status | Last updated |
 | --- | --- | --- | --- | --- | --- |
-| _none yet_ | | | | | |
+| [Backend foundation](2026-10-18_backend_foundation.md) | backend | §10.3, §11, NFRs | MVP | Done | 2026-10-18 |
+| [Mobile & Dashboard foundation](2026-10-18_cross_mobile-dashboard-foundation.md) | cross | §10, §11, §13, NFRs | MVP | Done | 2026-10-18 |
