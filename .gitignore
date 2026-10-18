@@ -1,0 +1,6 @@
+# Monorepo-wide ignores (each project keeps its own .gitignore too)
+.DS_Store
+.idea/
+*.iml
+.vscode/
+.env
