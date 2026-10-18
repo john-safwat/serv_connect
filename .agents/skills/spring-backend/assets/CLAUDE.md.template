@@ -1,0 +1,172 @@
+# <PROJECT NAME> — Spring Boot Backend — Development Rules
+
+> Read and follow every rule here before starting **any** task — feature, bug fix, refactor,
+> chore, one-line hot-fix, or a question whose answer leads to a code change. "It's only a small
+> change" is never grounds to skip a rule.
+>
+> **A task ends only when the matching `docs/*.md` files reflect the change** (§21). Code compiling
+> is not "done."
+>
+> Scope: the Spring Boot backend at the repo root (group `<GROUP>`, artifact `<ARTIFACT>`, Java 17,
+> Maven, Spring Boot 4.x). Treat user/PII and any sensitive domain data as sensitive by default (§11).
+
+## 0. Pre-Task Checklist
+
+1. Read this file in full.
+2. **Write a plan** — every class created/modified, its package, the approach — and wait for
+   approval before writing code.
+3. Check `docs/03-api-reference.md` so you don't duplicate an endpoint.
+4. Check the feature package (`features/<feature>/`) before adding an entity/DTO/service/repository.
+5. Grep for existing entities/repositories/mappers/utilities that already cover the need; extend
+   rather than reinvent.
+6. State the plan and wait for approval on any destructive/irreversible action (dropping/altering a
+   table, editing an applied migration, force-push, deleting generated files).
+
+## 1. Structure — feature-sliced
+
+Packages by feature under `<basePackage>.features.<feature>`, each split into
+`controller/ dto/ entity/ mapper/ repository/ service/`. Cross-cutting code lives in `common/`
+(`audit/ base/ config/ exception/ exception_handler/ i18n/ response/ security/ validation/`); the
+base package holds only the application entry point + a root health controller.
+
+- Never add a feature directly under the base package; never create root-level
+  `controller`/`service`/`repository`/`entity` god-packages spanning all features.
+- Only create the subpackages a feature needs. A feature depends on `common/` freely and on another
+  feature **only** through its service interface + DTOs — never its `repository/`/`entity/`.
+- `common/` never imports from a feature. Default to package-private visibility.
+
+## 2. Git commits
+
+`<type>(<scope>): <short description>` — types `feat|fix|refactor|docs|chore|build|perf|security`,
+scope = feature/infra area. Commit after each working unit once `./mvnw clean verify` passes.
+Never commit: secrets/`.env`/`application-local.yml`, `target/`, a failing build, commented-out
+code, or an edit to an already-applied migration. Never `--no-verify`, force-push a protected
+branch, or `git reset --hard` without explicit instruction.
+
+## 3. Walkthroughs
+
+After every completed feature/fix/refactor, create `docs/walkthroughs/YYYY-MM-DD_<slug>.md`
+(summary, files changed by package, API changes, schema changes, security impact, config, follow-ups)
+and add a line to `docs/walkthroughs/README.md`.
+
+## 4. Secrets & config
+
+No credential/key/connection-string hardcoded — every one is `${ENV_VAR}`. Profiles:
+`application.properties` (defaults + active profile), `application-dev`, `application-prod`
+(env-sourced), gitignored `application-local`. Activate via `SPRING_PROFILES_ACTIVE`. Provide a
+`.env.example` listing every variable. **Fail fast** on a missing required secret — never default a
+security value to empty.
+
+## 5. Database, entities & migrations
+
+- Schema changes via **Flyway** (`V<n>__<desc>.sql`); `ddl-auto=validate` outside a local sandbox.
+  **Never edit an applied migration** — ship a new one. One logical change per file. Zero-downtime:
+  add-then-drop across two releases; a rename is drop+add.
+- One `@Entity` per aggregate root, extending a `BaseEntity` `@MappedSuperclass`
+  (`createdAt/updatedAt/createdBy/updatedBy` via JPA auditing). Standard Lombok shape
+  (`@Getter @Setter @NoArgsConstructor(PROTECTED)`); **never `@Data` on an `@Entity`.** Identity
+  equality by database id only. Bidirectional associations keep both sides in sync; default to LAZY.
+- Persist absolute instants as `Instant` (UTC / `timestamptz`); `LocalDate`/`LocalTime` only for
+  date/time-of-day concepts. Never format timestamps on the backend.
+- Paginate any growable list (`Page<T>`); avoid N+1 with `@EntityGraph`/`JOIN FETCH`; index
+  `WHERE`/`JOIN`/`ORDER BY` columns in the same migration.
+
+## 6. Layered architecture
+
+Controller → Service → Repository, no layer skipped. Controllers bind/validate/delegate to one
+service method and wrap the result — no business logic or repository calls. Services hold logic +
+`@Transactional`, take/return DTOs. Service interface + `*Impl` is the default. Repositories are
+`JpaRepository`. **Constructor injection only** (`@RequiredArgsConstructor` on `final` fields).
+
+## 7. DTOs & mapping
+
+Request/response DTOs are Java `record`s. Validation lives on the request DTO, never the entity.
+**Never return an `@Entity` from a controller.** A response DTO exposes only what the consumer needs.
+Mappers are MapStruct `@Mapper(componentModel="spring")` interfaces (project-wide).
+
+## 8. REST conventions
+
+Base path `/api/v1/<resource>` (plural, kebab-case). Verbs map to intent. Status codes:
+`200/201/400/401/403/404/409/429/500`. **Never `204`** — a void success is a `Success` envelope with
+`data: null`. List endpoints paginate. Adding an endpoint updates `docs/03-api-reference.md` in the
+same change.
+
+## 9. Validation
+
+Jakarta Bean Validation on request DTOs (`@Valid @RequestBody`). Cross-field/DB-dependent checks live
+in the service and throw a typed exception. Custom constraints live in `common/validation/` and are
+reused across features.
+
+## 10. Error handling
+
+A single global `@RestControllerAdvice` maps every exception to the `BaseResponseBody.Fail` envelope.
+Domain exceptions in `common/exception/` extend `RuntimeException`; services throw them, never return
+`null`. The client-facing message is generic and localized — **never a stack trace or raw message**;
+detail is logged server-side only. A unique-constraint violation is caught and rethrown as a typed
+`409`.
+
+## 11. Security & PHI/PII
+
+Authenticated by default; `permitAll()` explicit. Stateless JWT, CSRF disabled, `@EnableMethodSecurity`
++ `@PreAuthorize`. BCrypt passwords; a `@SecurePassword` constraint (max 72, complexity, HIBP check).
+Refresh tokens stored as SHA-256 hashes with rotation + reuse detection; failures collapse to one
+`InvalidCredentialsException`. CORS configured explicitly (never `@CrossOrigin("*")`). **No PHI/PII in
+logs or URLs.** Every write attributable via `createdBy`/`updatedBy`. Prod enforces TLS. Secrets from
+env vars (§4).
+
+## 12. Logging
+
+SLF4J via `@Slf4j`, parameterized (never concatenation), to console + a rolling file appender. Levels:
+`error` (with the exception object), `warn`, `info`, `debug`. **No PHI at any level.**
+
+## 13. Timestamps
+
+`Instant`/UTC/`timestamptz` for absolute time; return raw ISO-8601, render client-side.
+
+## 14. Configuration & beans
+
+One `@Configuration` per concern under `common/config/`. Group properties behind
+`@ConfigurationProperties`. Prefer auto-configuration over hand-rolled setup.
+
+## 15. Transactions
+
+`@Transactional` on service methods only; read-only reads use `readOnly = true`. Keep transactions
+short (no HTTP/file-IO inside). Don't swallow exceptions in a way that defeats rollback.
+
+## 16. Performance & caching
+
+Redis cache with a fail-open `CacheErrorHandler`; named regions with explicit TTLs; **pair every
+mutation with `@CacheEvict`.** Cache only read-heavy, rarely-changing data — never patient-specific
+data without an invalidation story. Paginate; watch N+1; index.
+
+## 17. Dead code & boundaries
+
+Remove unused imports/methods/classes on sight (git preserves history). No feature imports another
+feature's `Repository`/`@Entity`/package-private class. `common/` never imports a feature. Every PR
+builds clean with `./mvnw clean verify`.
+
+## 18. Style
+
+Run a formatter (Spotless/Checkstyle) before commit if configured; otherwise match existing formatting
+(4-space indent, one top-level type per file, braces same line). Deliberate Lombok; records for DTOs.
+`PascalCase`/`camelCase`/`UPPER_SNAKE_CASE`. No wildcard imports.
+
+## 19. Build & run
+
+`./mvnw spring-boot:run` (local, Docker Compose Postgres/Redis) · `./mvnw clean verify` ·
+`./mvnw clean package`. Never commit `target/`.
+
+## 20. Check before building
+
+Read `docs/01-project-overview.md`; for a feature read its section of `docs/03-api-reference.md`; for
+schema read `docs/02-database-schema.md` + the latest migration; for auth read `docs/04-security.md`.
+Extend/reuse existing code; only create new when the existing can't be extended without a breaking
+change, and flag the trade-off in the walkthrough.
+
+## 21. Post-task documentation
+
+Every task ends with a docs update. Update, as applicable: `03-api-reference.md` (endpoints),
+`02-database-schema.md` (migrations), `04-security.md` (roles/permissions/PHI fields),
+`01-project-overview.md` (feature/integration/config), `05-localization.md` (messages/locales),
+`docs/README.md` (new docs), and a walkthrough. Before committing:
+`git status docs/` should show changes matching the task — if not, ask whether it really needed none.

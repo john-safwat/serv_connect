@@ -1,0 +1,16 @@
+# --- appended by flutter-clean-cubit-scaffold ---
+# Per-flavor secrets — never commit anything but .env.example
+.env
+.env.dev
+.env.staging
+.env.prod
+
+# Signing / Firebase
+android/key.properties
+android/app/**/google-services.json
+ios/Runner/Firebase/**/GoogleService-Info.plist
+lib/firebase_options*.dart
+*.jks
+*.p8
+*.p12
+*.mobileprovision

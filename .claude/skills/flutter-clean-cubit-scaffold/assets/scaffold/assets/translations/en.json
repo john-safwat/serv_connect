@@ -1,0 +1,16 @@
+{
+  "common": {
+    "app_name": "__APP_TITLE__",
+    "retry": "Retry"
+  },
+  "auth": {
+    "login_title": "Welcome back",
+    "email": "Email",
+    "password": "Password",
+    "login_button": "Log in"
+  },
+  "home": {
+    "title": "Home",
+    "logout": "Log out"
+  }
+}

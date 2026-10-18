@@ -1,0 +1,102 @@
+name: __PKG__
+description: "__DESCRIPTION__"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State management — Cubit only, no Bloc events.
+  flutter_bloc: ^9.1.1
+
+  # DI
+  get_it: ^9.2.1
+  injectable: ^3.0.0
+
+  # Routing
+  auto_route: ^11.1.0
+
+  # Networking
+  dio: ^5.9.2
+  retrofit: ^4.9.2
+  json_annotation: ^4.11.0
+  pretty_dio_logger: ^1.4.0
+
+  # Localisation
+  easy_localization: ^3.0.8
+
+  # Storage
+  flutter_secure_storage: ^10.0.0
+  shared_preferences: ^2.5.5
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Concurrency primitives (refresh-interceptor mutex).
+  synchronized: ^3.4.0
+
+  # Config
+  flutter_dotenv: ^6.0.1
+
+  # UI helpers
+  cached_network_image: ^3.4.1
+  flutter_svg: ^2.2.4
+  shimmer: ^3.0.0
+
+  # Utilities
+  intl: ^0.20.2
+  logger: ^2.7.0
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+  # Lints
+  very_good_analysis: ^10.2.0
+
+  # Code generation
+  build_runner: ^2.15.0
+  injectable_generator: ^3.0.2
+  auto_route_generator: ^10.5.0
+  json_serializable: ^6.13.1
+  retrofit_generator: ^10.2.5
+  flutter_gen_runner: ^5.14.1
+
+  # Testing
+  mocktail: ^1.0.5
+  bloc_test: ^10.0.0
+  http_mock_adapter: ^0.6.1
+
+  # Flavors + launcher icons
+  flutter_flavorizr: ^2.4.2
+  flutter_launcher_icons: ^0.14.4
+
+flutter_gen:
+  output: lib/generated/
+  assets:
+    enabled: true
+    exclude:
+      - .env.dev
+      - .env.staging
+      - .env.prod
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/translations/
+    # Per-flavor env files (gitignored — copied from .env.example by the
+    # scaffold script). The build references whichever flavor's entry loads.
+    - .env.dev
+    - .env.staging
+    - .env.prod

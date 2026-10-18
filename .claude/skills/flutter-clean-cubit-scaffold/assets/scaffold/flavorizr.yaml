@@ -1,0 +1,52 @@
+# flutter_flavorizr config — generates the native Android/iOS flavor wiring
+# (build.gradle product flavors, manifests, xcconfigs, schemes, icons).
+#
+# Run AFTER the scaffold is in place:
+#   dart run flutter_flavorizr
+#
+# The `instructions` list below deliberately OMITS the `flutter:*` processors
+# so flavorizr never overwrites the hand-written lib/ entry points
+# (main_dev.dart / main_staging.dart / main_prod.dart), app.dart, or the
+# feature code. It only touches the native project.
+
+app:
+  android:
+    flavorDimensions: "flavor"
+  ios: {}
+
+instructions:
+  - android:buildGradle
+  - android:androidManifest
+  - android:dummyAssets
+  - android:icons
+  - ios:podfile
+  - ios:xcconfig
+  - ios:buildTargets
+  - ios:schema
+  - ios:plist
+  - ios:launchScreen
+  - ios:icons
+  - ide:config
+
+flavors:
+  dev:
+    app:
+      name: "__APP_TITLE__ Dev"
+    android:
+      applicationId: "__BUNDLE_ID__.dev"
+    ios:
+      bundleId: "__BUNDLE_ID__.dev"
+  staging:
+    app:
+      name: "__APP_TITLE__ Staging"
+    android:
+      applicationId: "__BUNDLE_ID__.staging"
+    ios:
+      bundleId: "__BUNDLE_ID__.staging"
+  prod:
+    app:
+      name: "__APP_TITLE__"
+    android:
+      applicationId: "__BUNDLE_ID__"
+    ios:
+      bundleId: "__BUNDLE_ID__"

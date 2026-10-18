@@ -1,0 +1,32 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  errors:
+    unused_import: error
+    unused_element: error
+    unused_field: error
+    unused_local_variable: error
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.gr.dart"
+    - "**/generated/**"
+    - "lib/firebase_options*.dart"
+    - "build/**"
+
+linter:
+  rules:
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+    avoid_print: true
+    avoid_dynamic_calls: true
+    use_build_context_synchronously: true
+    require_trailing_commas: true
+    prefer_single_quotes: true
+    unnecessary_lambdas: true
+    unnecessary_parenthesis: true
+    public_member_api_docs: false
+    lines_longer_than_80_chars: false
+    flutter_style_todos: false
+    # Group dependencies by concern (state, network, UI…) — clearer than
+    # alphabetical.
+    sort_pub_dependencies: false

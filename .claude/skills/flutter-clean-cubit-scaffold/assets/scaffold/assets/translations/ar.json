@@ -1,0 +1,16 @@
+{
+  "common": {
+    "app_name": "__APP_TITLE__",
+    "retry": "إعادة المحاولة"
+  },
+  "auth": {
+    "login_title": "مرحباً بعودتك",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "login_button": "تسجيل الدخول"
+  },
+  "home": {
+    "title": "الرئيسية",
+    "logout": "تسجيل الخروج"
+  }
+}
