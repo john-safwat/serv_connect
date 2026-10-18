@@ -1,0 +1,42 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 25, 19, 0.4);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 100;
+}
+
+.panel {
+  inline-size: 100%;
+  max-inline-size: 440px;
+  block-size: 100%;
+  background: var(--ivory);
+  border-inline-start: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--sp-4);
+  padding-inline: var(--sp-5);
+  border-block-end: 1px solid var(--line);
+}
+
+.title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp-5);
+  font-size: 14px;
+  color: var(--ink-2);
+}

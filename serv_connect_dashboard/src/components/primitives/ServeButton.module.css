@@ -1,0 +1,86 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 13.5px;
+  padding-block: 10px;
+  padding-inline: 16px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  line-height: 1;
+  white-space: nowrap;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: var(--red);
+  color: var(--ivory);
+  box-shadow: var(--shadow-red);
+}
+
+.dark {
+  background: var(--ink);
+  color: var(--ivory);
+}
+
+.gold {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.ghost {
+  background: var(--ivory);
+  color: var(--ink);
+  border-color: var(--line-2);
+}
+
+.soft {
+  background: var(--red-soft);
+  color: var(--red-dark);
+}
+
+.sm {
+  padding-block: 7px;
+  padding-inline: 12px;
+  font-size: 12.5px;
+}
+
+.md {
+  padding-block: 10px;
+  padding-inline: 16px;
+  font-size: 13.5px;
+}
+
+.lg {
+  padding-block: 14px;
+  padding-inline: 20px;
+  font-size: 15px;
+}
+
+.fullWidth {
+  inline-size: 100%;
+}
+
+.spinner {
+  inline-size: 14px;
+  block-size: 14px;
+  border: 2px solid currentColor;
+  border-block-start-color: transparent;
+  border-radius: var(--r-pill);
+  animation: serveSpin 0.7s linear infinite;
+}
+
+@keyframes serveSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}

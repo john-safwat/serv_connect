@@ -1,0 +1,8 @@
+{
+  "required": "This field is required.",
+  "invalid_email": "Enter a valid email address.",
+  "invalid_phone": "Enter a valid phone number.",
+  "password_too_short": "Password must be at least 8 characters.",
+  "invalid_otp": "Enter a valid 6-digit verification code.",
+  "invalid_uuid": "Invalid identifier format."
+}

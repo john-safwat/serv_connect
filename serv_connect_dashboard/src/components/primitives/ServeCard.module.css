@@ -1,0 +1,26 @@
+.card {
+  background: var(--ivory);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.paper {
+  background: var(--paper);
+}
+
+.padded {
+  padding: var(--sp-4);
+}
+
+.goldAccent::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inset-block-end: 0;
+  inline-size: 3px;
+  background: var(--gold);
+}

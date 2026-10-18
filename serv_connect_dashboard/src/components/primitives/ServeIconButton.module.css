@@ -1,0 +1,34 @@
+.iconButton {
+  inline-size: 38px;
+  block-size: 38px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  background: var(--ivory);
+  color: var(--ink-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.iconButton:hover:not(:disabled) {
+  background: var(--paper);
+}
+
+.iconButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.badgeDot {
+  position: absolute;
+  inset-block-start: 8px;
+  inset-inline-end: 8px;
+  inline-size: 7px;
+  block-size: 7px;
+  background: var(--red);
+  border-radius: var(--r-pill);
+  border: 2px solid var(--ivory);
+}

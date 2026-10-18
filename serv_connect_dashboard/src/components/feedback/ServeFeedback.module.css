@@ -1,0 +1,93 @@
+.banner {
+  background: var(--amber-soft);
+  color: var(--ink);
+  border-block-end: 1px solid var(--gold);
+  padding-block: var(--sp-2);
+  padding-inline: var(--sp-6);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.stateBox {
+  background: var(--ivory);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--sp-3);
+}
+
+.iconCircle {
+  inline-size: 48px;
+  block-size: 48px;
+  border-radius: var(--r-pill);
+  background: var(--red-soft);
+  color: var(--red-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.stateTitle {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.stateBody {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--muted);
+  max-inline-size: 420px;
+}
+
+.toastViewport {
+  position: fixed;
+  inset-block-end: var(--sp-5);
+  inset-inline-end: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  z-index: 200;
+}
+
+.toastItem {
+  min-inline-size: 260px;
+  max-inline-size: 380px;
+  padding-block: var(--sp-3);
+  padding-inline: var(--sp-4);
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.toastSuccess {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.toastError {
+  background: var(--red-soft);
+  color: var(--red-dark);
+}
+
+.toastWarning {
+  background: var(--amber-soft);
+  color: var(--amber);
+}

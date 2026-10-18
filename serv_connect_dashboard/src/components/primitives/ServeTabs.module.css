@@ -1,0 +1,25 @@
+.tabList {
+  display: inline-flex;
+  background: var(--gray-pill-bg);
+  border-radius: var(--r-sm);
+  padding: var(--sp-1);
+  gap: var(--sp-1);
+}
+
+.tabButton {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding-block: 8px;
+  padding-inline: 14px;
+  border-radius: var(--r-xs);
+  cursor: pointer;
+}
+
+.tabButtonActive {
+  background: var(--ivory);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}

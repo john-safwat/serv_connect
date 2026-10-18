@@ -1,0 +1,15 @@
+{
+  "generic": "Something went wrong. Please try again.",
+  "network": "Unable to reach the server. Check your internet connection.",
+  "timeout": "The request timed out. Please try again.",
+  "unauthorized": "Your session has expired. Please sign in again.",
+  "forbidden_scope": "You do not have permission or scope to view this resource.",
+  "forbidden_title": "Access Restricted",
+  "feature_disabled": "This module is currently disabled for your organisation.",
+  "not_found": "The requested record could not be found.",
+  "not_found_title": "Record Not Found",
+  "conflict": "This record was modified by another user. Please refresh and try again.",
+  "scope_revoked": "Your access scope was updated. Redirected to Overview.",
+  "config_missing": "Application configuration is incomplete or invalid.",
+  "idle_locked": "Session locked due to inactivity to protect member records."
+}

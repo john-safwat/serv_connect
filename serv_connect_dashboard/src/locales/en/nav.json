@@ -1,0 +1,22 @@
+{
+  "group_main": "Main",
+  "group_people": "People",
+  "group_service": "Service",
+  "group_admin": "Admin",
+  "overview": "Overview",
+  "schedule": "Schedule",
+  "attendance": "Attendance",
+  "tasks": "Tasks",
+  "members": "Members",
+  "groups": "Groups",
+  "communication": "Communication",
+  "curriculum": "Curriculum",
+  "content": "Content Library",
+  "engagement": "Memorization & Points",
+  "trips": "Trips & Events",
+  "prayer": "Prayer Board",
+  "analytics": "Analytics",
+  "safeguarding": "Safeguarding & Audit",
+  "users_roles": "Users & Roles",
+  "settings": "Settings"
+}

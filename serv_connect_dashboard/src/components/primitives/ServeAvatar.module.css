@@ -1,0 +1,56 @@
+.avatar {
+  border-radius: var(--r-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-weight: 700;
+  flex-shrink: 0;
+  overflow: hidden;
+  user-select: none;
+}
+
+.img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sm {
+  inline-size: 28px;
+  block-size: 28px;
+  font-size: 11px;
+}
+
+.md {
+  inline-size: 36px;
+  block-size: 36px;
+  font-size: 13px;
+}
+
+.lg {
+  inline-size: 44px;
+  block-size: 44px;
+  font-size: 15px;
+}
+
+.gold {
+  background: var(--gold-soft);
+  color: var(--gold-dark);
+}
+
+.red {
+  background: var(--red-soft);
+  color: var(--red-dark);
+}
+
+.green {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.blue {
+  background: var(--blue-soft);
+  color: var(--blue);
+}

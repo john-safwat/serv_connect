@@ -1,0 +1,76 @@
+/* ServeConnect Unified Warm Editorial Design System Tokens (designs/main.main.svg) */
+:root {
+  /* Core Surfaces */
+  --white: #FFFFFF;
+  --ivory: #FFFFFF;
+  --paper: #FBF6EC;
+  --cream: #F4EDE0;
+  --canvas: #F4EDE0;
+  --surface-muted: #EFE8D9;
+  --shimmer-base: #ECE4D3;
+  --shimmer-highlight: #F6F1E6;
+
+  /* Typography & Ink */
+  --ink: #1E1913;
+  --ink-2: #4A4139;
+  --muted: #8C8173;
+
+  /* Hairlines & Borders */
+  --line: #E7DDC9;
+  --line-2: #DBCFB5;
+
+  /* Primary Brand — Bold Red & Oxblood */
+  --red: #C0182A;
+  --oxblood: #8C1420;
+  --red-dark: #8C1420;
+  --red-soft: #F6E5E1;
+
+  /* Secondary Brand — Editorial Gold */
+  --gold: #C6A15B;
+  --gold-2: #B0862F;
+  --gold-dark: #9C7C34;
+  --gold-soft: #EFE2C4;
+
+  /* Semantic Status Palettes */
+  --green: #3B7A54;
+  --green-soft: #E6F0E7;
+  --amber: #B07C13;
+  --amber-soft: #F5E9CD;
+  --blue: #34568C;
+  --blue-soft: #E6EBF4;
+  --gray-pill-bg: #EAE1CF;
+  --gray-pill-fg: #5C5246;
+
+  /* Radii */
+  --r-xs: 7px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  /* Elevations & Shadows */
+  --shadow: 0 12px 40px rgba(30, 25, 19, 0.08);
+  --shadow-sm: 0 4px 16px rgba(30, 25, 19, 0.05);
+  --shadow-red: 0 6px 16px rgba(192, 24, 42, 0.24);
+  --focus-ring: 0 0 0 3px rgba(192, 24, 42, 0.28);
+
+  /* Spacing Scale */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+
+  /* Layout Dimensions */
+  --sidebar-width: 256px;
+  --sidebar-collapsed-width: 76px;
+  --topbar-height: 66px;
+
+  /* Typography — Default LTR (English) */
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --serif: 'Fraunces', Georgia, serif;
+}

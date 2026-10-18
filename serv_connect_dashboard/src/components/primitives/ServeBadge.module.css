@@ -1,0 +1,49 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-block: 4px;
+  padding-inline: 10px;
+  border-radius: var(--r-pill);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.dot {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: var(--r-pill);
+  background: currentColor;
+  opacity: 0.85;
+}
+
+.red {
+  background: var(--red-soft);
+  color: var(--red-dark);
+}
+
+.gold {
+  background: var(--gold-soft);
+  color: var(--gold-dark);
+}
+
+.green {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.amber {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.blue {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.gray {
+  background: var(--gray-pill-bg);
+  color: var(--gray-pill-fg);
+}
