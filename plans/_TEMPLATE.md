@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Status | Draft · Approved · In progress · Blocked · Done · Abandoned |
-| Area | backend · mobile · cross |
+| Area | backend · mobile · dashboard · cross |
 | BRD | §8.x — `FR-x.y`, `FR-x.y` |
 | Phase | MVP · P2 · P3 |
 | Created | YYYY-MM-DD |
@@ -47,11 +47,18 @@
 - On-device storage: <tables, encryption>
 - Outbox / offline behaviour: <what works offline, what queues>
 
-### 4.3 API contract changes (`docs/03-api-reference.md`)
+### 4.3 Dashboard
+
+- Routes / pages / components / hooks: <`src/features/<x>/…` files>
+- Design files implemented: <`designs/dashboard/{en,ar}/…`>
+- Permission gating: <permissions that show/enable each action>
+- States: <loading, empty, error, 403, offline>
+
+### 4.4 API contract changes (`docs/03-api-reference.md`)
 
 <Request/response shapes. Additive only for `/api/v1`.>
 
-### 4.4 Sync (`docs/06-sync.md`)
+### 4.5 Sync (`docs/06-sync.md`)
 
 | Entity | Syncable? | Conflict strategy | Scope filter |
 | --- | --- | --- | --- |
@@ -73,6 +80,7 @@
 
 - Backend: <unit, `@WebMvcTest`, integration — incl. 403 out-of-scope + 400 invalid input>
 - Mobile: <unit, widget, offline/sync tests>
+- Dashboard: <Vitest unit, component/hook tests with MSW, Playwright e2e in en + ar>
 - Conflict / idempotency tests:
 
 ## 8. Docs to Update
@@ -83,6 +91,7 @@
 - [ ] `docs/04-security.md`
 - [ ] `docs/05-localization.md`
 - [ ] `docs/06-sync.md`
+- [ ] `docs/07-mobile-architecture.md` / `docs/08-dashboard-architecture.md`
 - [ ] Walkthrough + `docs/walkthroughs/README.md`
 
 ## 9. Work Breakdown

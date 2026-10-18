@@ -28,13 +28,15 @@ Serv-Connect/                     # monorepo root (single git repo)
 │   ├── mobile/{en,ar}/           # Flutter app screens — English (LTR) / Arabic (RTL)
 │   └── dashboard/{en,ar}/        # web/admin dashboard screens
 ├── sev_connect_backend/          # Spring Boot 4 + Kotlin + Gradle API — rules: sev_connect_backend/CLAUDE.md
-└── serv_connect_mobile/          # Flutter mobile client — rules: serv_connect_mobile/CLAUDE.md (to be written)
+├── serv_connect_mobile/          # Flutter mobile client — rules: serv_connect_mobile/CLAUDE.md
+└── serv_connect_dashboard/       # React + TypeScript + Vite web/admin dashboard — rules: serv_connect_dashboard/CLAUDE.md
 ```
 
 | Project | Stack | Owns |
 | --- | --- | --- |
 | `sev_connect_backend/` | Kotlin 2.3, Java 25, Spring Boot 4.1, Gradle, PostgreSQL, Redis | Server source of truth, REST + sync API, permissions, audit |
 | `serv_connect_mobile/` | Flutter / Dart | Role-based mobile app, on-device store, outbox, local notifications |
+| `serv_connect_dashboard/` | React 19, TypeScript, Vite, npm | Web/admin console for leaders and administrators (online-only, own UI — §13) |
 
 > **Tech-stack note.** BRD §10 describes the client as Kotlin Multiplatform. The repo's real stack (Flutter) is what we build with; the BRD is authoritative for **business** requirements, not for the technology choice.
 
@@ -61,7 +63,7 @@ Every feature here is a long run that spans many sessions and commits, so **the 
 - Not required for: a pure question, or a trivial fix the user explicitly scopes as such (it still needs a commit + walkthrough entry).
 
 ### 1.2 Naming & location
-- `plans/YYYY-MM-DD_<area>_<slug>.md`, where `<area>` is `backend`, `mobile`, or `cross` (touches both projects). Example: `plans/2026-10-18_backend_foundation.md`, `plans/2026-10-20_cross_attendance-follow-up.md`.
+- `plans/YYYY-MM-DD_<area>_<slug>.md`, where `<area>` is `backend`, `mobile`, `dashboard`, or `cross` (touches more than one project). Example: `plans/2026-10-18_backend_foundation.md`, `plans/2026-10-20_cross_attendance-follow-up.md`.
 - Start from `plans/_TEMPLATE.md` and keep all of its sections; write "N/A" rather than deleting one.
 - Add a row to the index in `plans/README.md` in the same change that creates the plan.
 
@@ -97,7 +99,7 @@ Every feature here is a long run that spans many sessions and commits, so **the 
 
 - **No `Co-Authored-By` trailer:** never add `Co-Authored-By: Claude ...` (or any AI co-author trailer) to commit messages.
 - Types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `build`, `perf`, `security`.
-- Scope: the project then the area — `backend/attendance`, `backend/security`, `mobile/attendance`, `mobile/sync`, `docs`, `plans`, `repo` (root config). A cross-project change uses one commit per project when possible, in contract order (§5).
+- Scope: the project then the area — `backend/attendance`, `backend/security`, `mobile/attendance`, `mobile/sync`, `dashboard/members`, `dashboard/auth`, `docs`, `plans`, `repo` (root config). A cross-project change uses one commit per project when possible, in contract order (§5).
 - **Never commit:** secrets (`.env`, `application-local.*`, FCM/Firebase service-account JSON, `google-services.json`/`GoogleService-Info.plist` with real keys, keystores, `*.jks`, `*.p12`, `*.pem`); build output (`build/`, `.gradle/`, `.dart_tool/`, `.kotlin/`); IDE files (`.idea/`, `*.iml`); failing builds or tests; commented-out code; real member data (names, photos, phone numbers) in seeds, fixtures, or tests; an already-applied migration that was edited.
 - Never `--no-verify`, never `git push --force` on `main`/`develop`/`release/*`, never `git reset --hard` without explicit user instruction.
 
@@ -105,7 +107,7 @@ Every feature here is a long run that spans many sessions and commits, so **the 
 
 ## 3. Walkthrough History
 
-- After every completed feature, fix, or significant refactor: create/update `docs/walkthroughs/YYYY-MM-DD_<area>_<slug>.md` (`<area>` = `backend`, `mobile`, `cross`) and add a one-line entry to `docs/walkthroughs/README.md`.
+- After every completed feature, fix, or significant refactor: create/update `docs/walkthroughs/YYYY-MM-DD_<area>_<slug>.md` (`<area>` = `backend`, `mobile`, `dashboard`, `cross`) and add a one-line entry to `docs/walkthroughs/README.md`.
 - Contents: **Date**; **Plan** (link to the `plans/` file); **Summary**; **BRD coverage** (`FR-x.y`, fully/partially); **Files changed** (per project); **API / sync contract changes**; **DB / on-device schema changes**; **Security & safeguarding impact**; **Localization** (new keys in both `en` and `ar`); **Testing**; **Config** (new env vars / settings); **Known limitations / follow-ups**. Each project's `CLAUDE.md` may add fields.
 
 ---
@@ -119,11 +121,12 @@ All documentation lives in the root `docs/` — **never** create a `docs/` folde
 | `00-brd.md` | Business requirements (changed only when the user changes requirements) | Product |
 | `01-project-overview.md` | System architecture, both projects, config, BRD coverage per module | Both |
 | `02-database-schema.md` | Server schema + Flyway migration list | Backend |
-| `03-api-reference.md` | REST contract — method, path, request/response, permission + scope, feature flag, `FR` | Backend (consumed by mobile) |
+| `03-api-reference.md` | REST contract — method, path, request/response, permission + scope, feature flag, `FR` | Backend (consumed by mobile + dashboard) |
 | `04-security.md` | Permission catalog, roles, scopes, PII/Sensitive classes, audit rules, on-device security | Both |
 | `05-localization.md` | Locales, key conventions, RTL rules | Both |
 | `06-sync.md` | Offline-first sync protocol, syncable entities, conflict strategy per type | Both |
 | `07-mobile-architecture.md` | Flutter app structure, on-device store, outbox | Mobile |
+| `08-dashboard-architecture.md` | Dashboard structure, routing, auth flow, state, UI primitives | Dashboard |
 | `README.md` | Index of all docs | Both |
 | `walkthroughs/` | History (§3) | Both |
 
@@ -133,10 +136,10 @@ Create each file the first time a task needs it, and add it to `docs/README.md`.
 
 ## 5. API Contract Between Projects
 
-- The **backend owns the contract**; `docs/03-api-reference.md` is the contract's source of truth. The mobile app never relies on an endpoint, field, or behaviour that isn't documented there.
-- Contract-change order: (1) update `docs/03` (and `docs/06` for sync) in the plan, (2) backend implements + tests, (3) mobile consumes. Never ship a mobile change against an endpoint that doesn't exist yet.
+- The **backend owns the contract**; `docs/03-api-reference.md` is the contract's source of truth. Neither client (mobile app, dashboard) relies on an endpoint, field, or behaviour that isn't documented there.
+- Contract-change order: (1) update `docs/03` (and `docs/06` for sync) in the plan, (2) backend implements + tests, (3) mobile and/or dashboard consume. Never ship a client change against an endpoint that doesn't exist yet.
 - **Old app versions stay offline for weeks.** Changes to `/api/v1` are additive only (new optional fields, new endpoints). Removing, renaming, or changing the meaning of a field is a new API version, and the old one stays supported until the plan says otherwise.
-- Every response uses the backend's `BaseResponseBody` envelope; the mobile app parses errors from the envelope's localized message and code, never from raw text.
+- Every response uses the backend's `BaseResponseBody` envelope; the clients parse errors from the envelope's localized message and code, never from raw text.
 - Identifiers in URLs are opaque UUIDs. No name, phone, or email in a path or query string — in either project.
 
 ---
@@ -153,10 +156,10 @@ Create each file the first time a task needs it, and add it to `docs/README.md`.
 
 ## 7. Security, Safeguarding & PII (both projects)
 
-The platform holds data about **minors**. These rules apply to backend and mobile alike:
+The platform holds data about **minors**. These rules apply to the backend, mobile app, and dashboard alike:
 
 - [ ] Authorization is enforced **server-side** by permission + scope (backend §11). Client-side hiding is UX only, never security.
-- [ ] Never branch on a role name — use permissions (backend) or the permission set returned for the session (mobile).
+- [ ] Never branch on a role name — use permissions (backend) or the permission set returned for the session (mobile, dashboard).
 - [ ] No PII (name, phone, email, birthdate, photo URL) and no Sensitive data (medical, pastoral notes, consent) in logs, crash reports, analytics events, URLs, push-notification text, or JWT claims.
 - [ ] Sensitive data is stored separately, fetched through its own endpoint, audited on every read, and **encrypted at rest on the device** (encrypted local DB / secure storage). Tokens live only in platform secure storage (Keystore/Keychain).
 - [ ] Every Sensitive read and every write is attributable to a user (server audit trail).
@@ -242,7 +245,7 @@ All task types need: **Plan file & approval**, **Commit**, **Walkthrough**, **Do
 | Task | FR IDs | API contract (`docs/03`) | Sync (`docs/06`) | Security review (§7) | i18n (en + ar) | Tests | Both projects? |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | New feature / module | ✅ | if endpoints | if cached offline | ✅ | if strings | ✅ | usually `cross` plan |
-| New endpoint / DTO | ✅ | ✅ | if synced | if PII-adjacent | if messages | ✅ | backend first, then mobile |
+| New endpoint / DTO | ✅ | ✅ | if synced | if PII-adjacent | if messages | ✅ | backend first, then mobile / dashboard |
 | New syncable entity | ✅ | ✅ | ✅ | ✅ | — | ✅ conflict tests | ✅ |
 | Permission / scope change | ✅ | ✅ | ✅ feed filtering | ✅ | — | ✅ 403 tests | if UI gating changes |
 | Bug fix | if related | if API | if sync | if security | if strings | regression | if contract |
