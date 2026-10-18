@@ -24,6 +24,9 @@ Serv-Connect/                     # monorepo root (single git repo)
 ├── plans/                        # one living plan file per feature / long-running task (§1)
 │   ├── README.md                 # plan index + status board
 │   └── _TEMPLATE.md              # copy this to start a plan
+├── designs/                      # SVG / HTML design references (§13)
+│   ├── mobile/{en,ar}/           # Flutter app screens — English (LTR) / Arabic (RTL)
+│   └── dashboard/{en,ar}/        # web/admin dashboard screens
 ├── sev_connect_backend/          # Spring Boot 4 + Kotlin + Gradle API — rules: sev_connect_backend/CLAUDE.md
 └── serv_connect_mobile/          # Flutter mobile client — rules: serv_connect_mobile/CLAUDE.md (to be written)
 ```
@@ -218,6 +221,17 @@ git diff -- docs/ plans/
 ```
 
 If `git status -- docs/ plans/` shows no changes after a code change, stop and ask whether a docs update was really not needed (default: it was).
+
+---
+
+## 13. Designs
+
+- All designs live in the root `designs/` folder as **SVG or HTML**: `designs/mobile/` for the Flutter app, `designs/dashboard/` for the web/admin dashboard, each split into `en/` (LTR) and `ar/` (RTL). Shared tokens/components go in `designs/design-system.html` when provided. Naming rules: `designs/README.md`.
+- Any UI task reads the matching design in **both** `en/` and `ar/` before planning, and the plan's Design section names the design files it implements.
+- The built UI must match the design in layout, flow, and states (loading, empty, error, offline) in both languages; differences are logged in the plan as deliberate decisions or as gaps to fix.
+- If a screen the task needs has no design, say so in the plan's Open decisions — don't invent one silently.
+- Designs are reference input only: code never imports from `designs/`; needed assets are copied into the app project. No real member data in designs.
+- The dashboard is a **web/admin console**, which the BRD places in Phase 2/3 (BRD §4.2, FR-16.6). Build dashboard screens only when a plan for them is approved.
 
 ---
 
